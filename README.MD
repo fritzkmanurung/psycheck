@@ -1,7 +1,7 @@
 # **Proyek Data Mining: Explore Mental Health Data**
 
 ## **Deskripsi Singkat**
-Proyek ini menggunakan pendekatan **CRISP-DM (Cross Industry Standard Process for Data Mining)** untuk mendeteksi kesehatan mental seseorang. Proyek ini bertujuan untuk 3.	Mendeteksi gejala depresi menggunakan algoritma XGBoost, menggunakan teknik data mining dan machine learning untuk.
+Proyek ini menggunakan pendekatan **CRISP-DM (Cross Industry Standard Process for Data Mining)** untuk mendeteksi kesehatan mental seseorang. Proyek ini bertujuan untuk mendeteksi gejala depresi menggunakan algoritma XGBoost.
 
 ---
 
