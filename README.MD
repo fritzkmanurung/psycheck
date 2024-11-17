@@ -7,10 +7,7 @@ Proyek ini menggunakan pendekatan **CRISP-DM (Cross Industry Standard Process fo
 
 ## **1. Business Understanding**
 ### **Objektif Bisnis**
-Tujuan utama proyek ini adalah untuk mengembangkan sebuah aplikasi dunia nyata, khususnya dalam konteks kesehatan mental. Beberapa masalah yang ingin diselesaikan adalah,
-1.	Depresi adalah masalah kesehatan mental yang signifikan di masyarakat, dan deteksi dini dapat menjadi langkah penting untuk memberikan perawatan yang tepat waktu.
-2.	Mengingat stigma yang masih ada terkait dengan kesehatan mental, alat deteksi yang efektif dan efisien dapat memberikan dampak positif dalam meningkatkan kesadaran individu agar lebih peka dengan kesehatan mental.
-3.	Dengan menggunakan algoritma XGBoost untuk memproses data, proyek ini berfokus pada penggunaan data besar (big data) dan kecerdasan buatan (AI) untuk memberikan solusi yang dapat diterapkan di dunia nyata, yaitu dalam bidang kesehatan mental.
+
 
 ---
 
