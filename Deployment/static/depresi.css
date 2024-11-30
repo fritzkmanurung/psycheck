@@ -1,95 +1,66 @@
 body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    font-size: 1rem; /* Responsive font size */
-    position: relative;
-    z-index: 0;
-    background-color: #ffffff; /* Latar belakang hangat */
-    font-family: 'Poppins', sans-serif; /* Font keluarga */
+    background-color: #f0f4ff;
+    font-family: 'Arial', sans-serif;
 }
-/* Pattern with opacity */
-body::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('https://www.transparenttextures.com/patterns/black-linen.png'); /* Example pattern URL */
-    opacity: 0.3;
-    z-index: -1;
-    pointer-events: none; /* Ensures it doesn't interfere with content */
+.container {
+    margin-top: 50px;
+    max-width: 600px;
 }
-.navbar {
-    background-color: #ffffff; /* Warna hangat untuk header */
-    z-index: 1;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.card {
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
 }
-.navbar-brand h1 {
-    color: #A26769; /* Warna teks header */
-    font-weight: 600; /* Font tebal */
+h2 {
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
 }
-.gender-card {
-    cursor: pointer;
-    transition: transform 0.2s;
-    border: 3px solid transparent; /* Default border */
-    border-radius: 15px; /* Sudut kartu yang melengkung */
+.form-group label {
+    font-weight: 500;
 }
-.gender-card:hover {
-    transform: scale(1.05);
-}
-.card-img-top {
-    object-fit: cover;
-    height: 150px;
-    width: 150px;
-    border-radius: 50%;
-    margin: 10px auto;
-}
-.card-body {
+input, select {
+    font-size: 16px;
     padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 100%;
 }
-.card-title {
-    font-weight: 600; /* Font tebal pada judul kartu */
+input.is-invalid {
+    border-color: red;
 }
-.card-male {
-    background: linear-gradient(130deg, #D4E6F1, #FDFEFE); /* Gradasi biru lembut */
-    border-color: #A3C4DC; /* Border biru lembut */
+.invalid-feedback {
+    display: none;
+    color: red;
+    font-size: 0.875em;
 }
-.card-female {
-    background: linear-gradient(130deg, #FDE2E4, #FFF1F3); /* Gradasi pink lembut */
-    border-color: #F7A1A1; /* Border pink lembut */
+input.is-invalid + .invalid-feedback {
+    display: block;
 }
-footer {
-    background-color: #ffffff; /* Footer background */
-    padding: 20px;
-    border-top: 2px solid #A26769;
+.btn {
+    background-color: #007bff;
+    color: white;
+    border-radius: 25px;
+    font-size: 18px;
+    padding: 10px 0;
+    width: 100%;
 }
-footer p {
-    color: #A26769; /* Footer text color */
-    font-weight: 400; /* Berat font normal */
+.btn:hover {
+    background-color: #0056b3;
 }
-
-/* Responsive font size */
-@media (max-width: 768px) {
-    body {
-        font-size: 0.875rem;
-    }
-    .navbar-brand h1 {
-        font-size: 1.5rem;
-    }
-    h3, p {
-        font-size: 1rem;
-    }
+.alert {
+    margin-top: 15px;
 }
-@media (max-width: 576px) {
-    body {
-        font-size: 0.75rem;
-    }
-    .navbar-brand h1 {
-        font-size: 1.25rem;
-    }
-    h3, p {
-        font-size: 0.875rem;
-    }
+.header-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.header-icon img {
+    width: 80px;
+    height: 80px;
+}
+.text-center {
+    text-align: center;
 }
