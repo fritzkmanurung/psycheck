@@ -30,48 +30,51 @@ with open('../Application/scaler.pkl', 'rb') as file:
 def home():
     return render_template('depresi.html')
 
-# Route untuk API Prediksi
-@app.route('/predict', methods=['POST'])
-def predict():
+# Route untuk halaman from student
+@app.route('/student', methods=['POST'])
+def form_student():
     # Ambil data dari form
-    data = request.get_json()
-
+    data_student = request.get_json()
+    
     # Pastikan semua data yang diperlukan ada
-    required_fields = [
-        'age', 'gender', 'city', 'professionType', 'academicPressure', 'cgpa', 
-        'workPressure', 'studySatisfaction', 'workStudyHours', 'financialStress', 
-        'sleepDuration', 'dietaryHabits', 'haveYouEverHadSuicidalThoughts', 'familyHistoryofMentalIllnes'
+    required_fields_student = [
+        'student-age', 'academicPressure', 'cgpa', 'studySatisfaction', 'studentWorkStudyHours', 
+        'studentFinancialStress', 'student-gender', 'studentSleepDuration', 'studentDietaryHabits', 
+        'studentHaveYouEverHadSuicidalThoughts', 'studentFamilyHistoryofMentalIllnes'
     ]
-
+    
     # Periksa jika ada data yang tidak ada
-    missing_fields = [field for field in required_fields if field not in data]
-    if missing_fields:
-        return jsonify({"error": f"Missing fields: {', '.join(missing_fields)}"}), 400
+    missing_fields_student = [field for field in required_fields_student if field not in data_student]
+    if missing_fields_student:
+        return jsonify({"error": f"Missing fields: {', '.join(missing_fields_student)}"}), 400
 
     try:
         # Mengonversi data kategorikal menggunakan LabelEncoder
-        gender_encoded = le.transform([data['gender']])[0]
+        gender_student_encoded = le.transform([data_student['student-gender']])[0]
 
         # Membuat fitur berdasarkan jenis profesi
-        if data['professionType'] == 'student':
-            features = np.array([[
-                data['age'],
-                data['academicPressure'], data['cgpa'], 0  # Placeholder untuk 'workPressure' 
-            ]])
-        else:
-            features = np.array([[ 
-                data['age'],
-                0, 0, data['workPressure']  # Placeholder untuk 'academicPressure' dan 'cgpa'
+        features_student = np.array([[
+            data_student['student-age'],
+            data_student['academicPressure'], 
+            data_student['cgpa'],
+            data_student['studySatisfaction'],
+            data_student['studentWorkStudyHours'],
+            data_student['studentFinancialStress'],
+            gender_student_encoded,
+            data_student['studentSleepDuration'],
+            data_student['studentDietaryHabits'],
+            data_student['studentHaveYouEverHadSuicidalThoughts'],
+            data_student['studentFamilyHistoryofMentalIllnes'],
             ]])
 
-        # Melakukan scaling data
-        features_scaled = scaler.transform(features)
+        # Melakukan scaling data_student
+        features_student_scaled = scaler.transform(features_student)
 
         # Pilih model berdasarkan profesi
-        model = student_model if data['professionType'] == 'student' else working_model
+        model = student_model
 
         # Melakukan prediksi
-        prediction = model.predict(features_scaled)
+        prediction = model.predict(features_student_scaled)
 
         # Menentukan hasil prediksi
         result = "Depression Detected" if prediction[0] == 1 else "No Depression Detected"
@@ -81,6 +84,62 @@ def predict():
 
     except Exception as e:
         return jsonify({"error": f"Prediction error: {str(e)}"}), 500
+
+# Route untuk halaman from working
+@app.route('/working', methods=['POST'])
+def form_working():
+    # Ambil data dari form
+    data_working = request.get_json()
+    
+    # Pastikan semua data yang diperlukan ada
+    required_fields_working = [
+        'working-age', 'workPressure', 'jobSatisfaction', 'workingWorkStudyHours', 
+        'workingFinancialStress', 'working-gender', 'workingSleepDuration', 'workingDietaryHabits', 
+        'workingHaveYouEverHadSuicidalThoughts', 'workingFamilyHistoryofMentalIllnes'
+    ]
+    
+    # Periksa jika ada data yang tidak ada
+    missing_fields_working = [field for field in required_fields_working if field not in data_working]
+    if missing_fields_working:
+        return jsonify({"error": f"Missing fields: {', '.join(missing_fields_working)}"}), 400
+
+    try:
+        # Mengonversi data kategorikal menggunakan LabelEncoder
+        gender_working_encoded = le.transform([data_working['working-gender']])[0]
+
+        # Membuat fitur berdasarkan jenis profesi
+        features_working = np.array([[
+            data_working['working-age'],
+            data_working['workPressure'],
+            data_working['jobSatisfaction'],
+            data_working['workingWorkStudyHours'],
+            data_working['workingFinancialStress'],
+            gender_working_encoded,
+            data_working['workingSleepDuration'],
+            data_working['workingDietaryHabits'],
+            data_working['workingHaveYouEverHadSuicidalThoughts'],
+            data_working['workingFamilyHistoryofMentalIllnes'],
+            ]])
+
+        # Melakukan scaling data_working
+        features_working_scaled = scaler.transform(features_working)
+
+        # Pilih model berdasarkan profesi
+        model = working_model
+
+        # Melakukan prediksi
+        prediction = model.predict(features_working_scaled)
+
+        # Menentukan hasil prediksi
+        result = "Depression Detected" if prediction[0] == 1 else "No Depression Detected"
+
+        # Mengembalikan hasil prediksi dalam bentuk JSON
+        return jsonify({"prediction": result})
+
+    except Exception as e:
+        return jsonify({"error": f"Prediction error: {str(e)}"}), 500
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
