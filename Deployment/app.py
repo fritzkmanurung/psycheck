@@ -20,22 +20,22 @@ with open('../Application/scale.pkl', 'rb') as file:
     scale = pickle.load(file)
 
 # Pastikan semua data yang diperlukan ada
-    feature_names = [
-        'Age', 'Work/Study Hours', 'Financial Stress', 'Gender', 'Working Professional or Student', 
-        'Sleep Duration', 'Dietary Habits', 'Have you ever had suicidal thoughts ?', 'Family History of Mental Illness'
-    ]
+feature_names = [
+    'Age', 'Work/Study Hours', 'Financial Stress', 'Gender', 'Working Professional or Student', 
+    'Sleep Duration', 'Dietary Habits', 'Have you ever had suicidal thoughts ?', 'Family History of Mental Illness'
+]
 
 # Route untuk halaman utama
 @app.route('/')
 def home():
     return render_template('depresi.html')
 
-# Route untuk halaman from student
+# Route untuk melakukan prediksi
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
         # Ambil data dari form
-        data = request.get_json('input')
+        data = request.get_json()
         print(f"Received input: {data}")
         
         input_data_values = data.get('input')
@@ -52,6 +52,7 @@ def predict():
         prediction = model.predict(input_data_scaled)[0]
         print(f"Prediction: {prediction}")
         
+        # Kembalikan hasil prediksi dalam format JSON
         return jsonify({'prediction': int(prediction)})
     
     except Exception as e:

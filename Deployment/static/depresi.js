@@ -1,18 +1,18 @@
-document.getElementById('depresi-form').addEventListener('submit', async function (event) {
+document.getElementById('depression-form').addEventListener('submit', async function (event) {
     event.preventDefault(); // Mencegah form untuk submit secara default
 
     // Menangkap nilai input dari form
     const data = {
         input: [
-            parseInt(document.getElementById('age').value),
-            parseInt(document.getElementById('workStudyHours').value),
-            parseInt(document.getElementById('financialStress').value),
-            parseInt(document.getElementById('gender').value),
-            parseInt(document.getElementById('workStudyStatus').value),
-            parseInt(document.getElementById('sleepDuration').value),
-            parseInt(document.getElementById('dietaryHabits').value),
-            parseInt(document.getElementById('suicidalThoughts').value),
-            parseInt(document.getElementById('familyHistory').value)
+            parseInt(document.getElementById('age').value),                          // Age
+            parseInt(document.getElementById('workStudyHours').value),               // Work/Study Hours
+            parseInt(document.getElementById('financialStress').value),             // Financial Stress
+            parseInt(document.getElementById('gender').value),                      // Gender
+            parseInt(document.getElementById('workStudyStatus').value),             // Working Status (Student/Professional)
+            parseInt(document.getElementById('sleepDuration').value),               // Sleep Duration
+            parseInt(document.getElementById('dietaryHabits').value),               // Dietary Habits
+            parseInt(document.getElementById('suicidalThoughts').value),            // Suicidal Thoughts
+            parseInt(document.getElementById('familyHistory').value)                // Family History
         ]
     };
 
@@ -26,7 +26,16 @@ document.getElementById('depresi-form').addEventListener('submit', async functio
             body: JSON.stringify(data)
         });
 
+        // Pastikan response dari server valid
+        if (!response.ok) {
+            throw new Error('Failed to get a valid response from the server');
+        }
+
+        // Parse respons JSON
         const result = await response.json();
+        console.log(result); // Log the response for debugging
+
+        // Tentukan hasil prediksi
         const prediction = result.prediction === 1 ? "Depression Detected" : "No Depression Detected";
 
         // Menampilkan hasil prediksi pada halaman
@@ -35,7 +44,7 @@ document.getElementById('depresi-form').addEventListener('submit', async functio
         `;
 
         // Reset form setelah pengiriman (opsional)
-        document.getElementById('depresi-form').reset();
+        document.getElementById('depression-form').reset();
 
     } catch (error) {
         // Menangani error jika request gagal
