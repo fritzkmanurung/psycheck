@@ -1,10 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import pickle
 import pandas as pd
-import numpy as np
 import warnings
-from sklearn.preprocessing import LabelEncoder
-from sklearn.preprocessing import StandardScaler
 
 # Menonaktifkan peringatan untuk XGBoost
 warnings.filterwarnings("ignore", category=UserWarning, module="xgboost")
@@ -12,17 +9,14 @@ warnings.filterwarnings("ignore", category=UserWarning, module="xgboost")
 app = Flask(__name__)
 
 # Memuat model XGBoost untuk Student dan Working Professional
-with open('../Application/nn.pkl', 'rb') as file:
+with open('../Application/xgb_model.pkl', 'rb') as file:
     model = pickle.load(file)
-
-# Memuat Scaler
-with open('../Application/scale.pkl', 'rb') as file:
-    scale = pickle.load(file)
 
 # Pastikan semua data yang diperlukan ada
 feature_names = [
-    'Age', 'Work/Study Hours', 'Financial Stress', 'Gender', 'Working Professional or Student', 
-    'Sleep Duration', 'Dietary Habits', 'Have you ever had suicidal thoughts ?', 'Family History of Mental Illness'
+    'Gender', 'Age', 'Working Professional or Student', 'Sleep Duration', 'Dietary Habits', 
+    'Have you ever had suicidal thoughts ?', 'Work/Study Hours', 'Financial Stress',
+    'Family History of Mental Illness', 'Job/Study Satisfaction', 'Work/Academic Pressure'
 ]
 
 # Route untuk halaman utama
@@ -40,16 +34,14 @@ def predict():
         
         input_data_values = data.get('input')
         
-        # Ubah input menjadi DataFrame dengan nama kolom yang sama seperti saat fit scaler
+        # Ubah input menjadi DataFrame dengan nama kolom yang sama
         input_data = pd.DataFrame([input_data_values], columns=feature_names)
         print(f"Input data as DataFrame: {input_data}")
         
-        # Standarisasi data input menggunakan scaler
-        input_data_scaled = scale.transform(input_data)
-        print(f"Scaled input data: {input_data_scaled}")
+        input_data = input_data[feature_names]
         
         # Prediksi menggunakan model
-        prediction = model.predict(input_data_scaled)[0]
+        prediction = model.predict(input_data)[0]
         print(f"Prediction: {prediction}")
         
         # Kembalikan hasil prediksi dalam format JSON
