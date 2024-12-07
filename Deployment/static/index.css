@@ -1,0 +1,114 @@
+/* Pattern background yang lebih terlihat jelas */
+body {
+    background: url('https://www.transparenttextures.com/patterns/black-linen.png');
+    background-size: 100px 100px;
+    background-attachment: fixed;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Styling untuk card */
+.card {
+    border-radius: 10px;
+    border-radius: 15px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.container {
+    padding-top: 50px;
+}
+
+/* Menambahkan warna latar belakang elegan untuk card */
+.elegant-color {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.3), rgba(110, 110, 110, 0.3)); /* Gradient with transparency */
+    color: #081827;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.title-text {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+/* Efek hover pada card */
+.card:hover {
+    /* transform: translateY(-10px); */
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Styling untuk logo */
+.logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+/* Styling untuk lingkaran gambar */
+.circle-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #1981BC;
+    margin: 0 10px;
+}
+
+/* Styling untuk nama dan NIM */
+.name {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Styling untuk Row 2 dengan foto pembuat */
+.team-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Styling untuk kolom 2 */
+.column-2 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-step {
+    display: none;
+}
+.form-step.active {
+    display: block;
+}
+
+.thank-you-message {
+    display: none;
+    text-align: center;
+    padding: 20px;
+}
+
+.thank-you-message .animation {
+    font-size: 2rem;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+#progress-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+progress {
+    width: 100%;
+}

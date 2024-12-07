@@ -1,0 +1,142 @@
+<!-- Card 1 -->
+<div class="card" style="height: 85.75vh;">
+    <div class="card-body elegant-color">
+        <h3 class="text-center title-text" id="titlecard">Formulir Prediksi Depresi</h3>
+        <div id="progress-container">
+            <!-- Progress Bar -->
+            <progress id="form-progress" value="1" max="11"></progress>
+            <p id="step-number">Langkah 1 dari 11</p>
+        </div>
+
+        <form id="depression-form">
+            <!-- Langkah 1 -->
+            <div class="form-step active" data-step="1">
+                {% include 'questions/q_1.html' %}
+                <button type="button" class="btn btn-primary next-btn" disabled>Selanjutnya</button>
+            </div>
+
+            <!-- Langkah 2 -->
+            <div class="form-step" data-step="2">
+                {% include 'questions/q_2.html' %}
+                <button type="button" class="btn btn-secondary prev-btn">Sebelumnya</button>
+                <button type="button" class="btn btn-primary next-btn" disabled>Selanjutnya</button>
+            </div>
+
+            <!-- Langkah 3 -->
+            <div class="form-step" data-step="3">
+                {% include 'questions/q_3.html' %}
+                <button type="button" class="btn btn-secondary prev-btn">Sebelumnya</button>
+                <button type="button" class="btn btn-primary next-btn" disabled>Selanjutnya</button>
+            </div>
+
+            <!-- Langkah 4 -->
+            <div class="form-step" data-step="4">
+                {% include 'questions/q_4.html' %}
+                <button type="button" class="btn btn-secondary prev-btn">Sebelumnya</button>
+                <button type="button" class="btn btn-primary next-btn" disabled>Selanjutnya</button>
+            </div>
+
+            <!-- Langkah 5 -->
+            <div class="form-step" data-step="5">
+                {% include 'questions/q_5.html' %}
+                <button type="button" class="btn btn-secondary prev-btn">Sebelumnya</button>
+                <button type="button" class="btn btn-primary next-btn" disabled>Selanjutnya</button>
+            </div>
+
+            <!-- Langkah 6 -->
+            <div class="form-step" data-step="6">
+                {% include 'questions/q_6.html' %}
+                <button type="button" class="btn btn-secondary prev-btn">Sebelumnya</button>
+                <button type="button" class="btn btn-primary next-btn" disabled>Selanjutnya</button>
+            </div>
+
+            <!-- Langkah 7 -->
+            <div class="form-step" data-step="7">
+                {% include 'questions/q_7.html' %}
+                <button type="button" class="btn btn-secondary prev-btn">Sebelumnya</button>
+                <button type="button" class="btn btn-primary next-btn" disabled>Selanjutnya</button>
+            </div>
+
+            <!-- Langkah 8 -->
+            <div class="form-step" data-step="8">
+                {% include 'questions/q_8.html' %}
+                <button type="button" class="btn btn-secondary prev-btn">Sebelumnya</button>
+                <button type="button" class="btn btn-primary next-btn" disabled>Selanjutnya</button>
+            </div>
+
+            <!-- Langkah 9 -->
+            <div class="form-step" data-step="9">
+                {% include 'questions/q_9.html' %}
+                <button type="button" class="btn btn-secondary prev-btn">Sebelumnya</button>
+                <button type="button" class="btn btn-primary next-btn" disabled>Selanjutnya</button>
+            </div>
+
+            <!-- Langkah 10 -->
+            <div class="form-step" data-step="10">
+                {% include 'questions/q_10.html' %}
+                <button type="button" class="btn btn-secondary prev-btn">Sebelumnya</button>
+                <button type="button" class="btn btn-primary next-btn" disabled>Selanjutnya</button>
+            </div>
+
+            <!-- Langkah 11 -->
+            <div class="form-step" data-step="11">
+                {% include 'questions/q_11.html' %}
+                <button type="button" class="btn btn-secondary prev-btn">Sebelumnya</button>
+                <button type="submit" class="btn btn-success" id="submit-btn">Kirim</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- JavaScript untuk menangani submit dan mengganti tampilan -->
+<script>
+    document.getElementById('depression-form').addEventListener('submit', function(event) {
+        event.preventDefault();  // Mencegah form dikirimkan secara default
+
+        // Fade out form
+        this.style.opacity = '0';
+        
+        // Setelah fade out, ganti konten
+        setTimeout(() => {
+            this.style.display = 'none';
+            const cardBody = document.querySelector('.card-body');
+            
+            // Hapus progress container
+            const progressContainer = document.getElementById('progress-container');
+            if (progressContainer) {
+                progressContainer.remove();
+            }
+
+            // Hapus progress container
+            const titlecard = document.getElementById('titlecard');
+            if (titlecard) {
+                titlecard.remove();
+            }
+
+            // Tambahkan pesan terima kasih
+            cardBody.innerHTML += `
+                <div id="thank-you-message" style="text-align: center; font-size: 2rem; padding-top: 20px; animation: fadeIn 1s ease-in-out;">
+                    <p>🎉 Terima kasih telah mengisi formulir! 🎉</p>
+                </div>
+            `;
+        }, 500); // waktu sesuaikan dengan durasi fade out
+    });
+</script>
+
+<!-- CSS untuk efek animasi -->
+<style>
+    @keyframes fadeIn {
+        from { 
+            opacity: 0; 
+            transform: scale(0.9); 
+        }
+        to { 
+            opacity: 1; 
+            transform: scale(1); 
+        }
+    }
+
+    #depression-form {
+        transition: opacity 0.5s ease;
+    }
+</style>

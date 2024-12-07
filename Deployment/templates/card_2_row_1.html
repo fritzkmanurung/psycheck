@@ -1,0 +1,51 @@
+<!-- Card 2 Row 1 -->
+<div class="card" style="height: 35vh;">
+    <div class="card-body elegant-color d-flex flex-column justify-content-center align-items-center" style="height: 100%;">
+        <h3 class="text-center" id="result-title">Hasil Prediksi Depresi</h3>
+        
+        <!-- Elemen hasil prediksi -->
+        <div id="result" class="result-box text-center text-white">
+            <!-- This will display the result when available -->
+        </div>
+        <!-- Animasi berjalan (muncul sebelum submit) -->
+        <div id="walking-animation" class="walking-animation">
+            <img src="../static/ezgif.com-crop.gif" alt="Walking Person" style="width: 100px; height: auto; animation: walkAnimation 5s infinite;">
+        </div>
+    </div>
+</div>
+
+<!-- Additional CSS -->
+<style>
+    /* Importing Google Font */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    /* Apply the font to the entire page */
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .text-white {
+        color: #000000 !important;
+    }
+
+    /* Animation for walking person */
+    .walking-animation img {
+        animation: walkAnimation 5s infinite;
+    }
+
+    @keyframes walkAnimation {
+        0% {
+            transform: translateX(-100px); /* Start from left */
+        }
+        50% {
+            transform: translateX(100px); /* Move to right */
+        }
+        100% {
+            transform: translateX(-100px); /* Return to left */
+        }
+    }
+</style>

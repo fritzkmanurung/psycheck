@@ -1,0 +1,90 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<style>
+    /* Mengganti jenis font secara global */
+    body {
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* Membuat gambar menjadi lebih besar ketika hover */
+    .circle-img {
+        transition: transform 0.3s ease;
+        position: relative;
+    }
+
+    /* Efek hover untuk gambar dan balon percakapan */
+    .text-center:hover .circle-img {
+        transform: scale(1.2);
+    }
+
+    /* Tampilkan balon percakapan saat hover */
+    .text-center:hover .hover-text {
+        display: block;
+        opacity: 1;
+    }
+
+    /* Ikon external link */
+    i {
+        color: black;
+        transition: color 0.3s ease;
+    }
+
+    /* Warna ikon ketika hover */
+    i:hover {
+        color: #0077b5;
+    }
+
+    /* Menata tampilan team container */
+    .team-container {
+        position: relative;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    /* Container untuk nama */
+    .name {
+        font-size: 14px;
+        text-align: center;
+    }
+
+    /* Pastikan teks 'Created by:' berada di tengah */
+h5.mb-4 {
+    /* text-align: center; */
+    font-weight: bold; /* Untuk penekanan, opsional */
+    font-size: 14px; /* Menyesuaikan ukuran font */
+}
+
+</style>
+
+<div class="card" style="height: 47.75vh;">
+    <div class="card-body elegant-color">
+        <img src="../static/logo-dami.png" alt="Website Logo" class="logo mx-auto d-block">
+        <h5 class="mb-4">Created by:</h5>
+        <div class="team-container">
+            <!-- Pembuat 1 -->
+            <div class="text-center">
+                <img src="../static/walker.png" alt="Pembuat 1" class="circle-img">
+                <p class="name">Walker V Simanjuntak <br> 12S21012 
+                    <a href="https://www.linkedin.com" target="_blank"><i class="fas fa-external-link-alt ml-2"></i></a>
+                </p>
+            </div>
+            <!-- Pembuat 2 -->
+            <div class="text-center">
+                <img src="../static/markus.png" alt="Pembuat 2" class="circle-img">
+                <p class="name">Markus P Hutagalung <br> 12S21013 
+                    <a href="https://www.linkedin.com" target="_blank"><i class="fas fa-external-link-alt ml-2"></i></a>
+                </p>
+            </div>
+            <!-- Pembuat 3 -->
+            <div class="text-center">
+                <img src="../static/fritz.jpg" alt="Pembuat 3" class="circle-img">
+                <p class="name">Fritz K Manurung <br> 12S21014 
+                    <a href="https://www.linkedin.com" target="_blank"><i class="fas fa-external-link-alt ml-2"></i></a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
