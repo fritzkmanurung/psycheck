@@ -9,7 +9,7 @@ warnings.filterwarnings("ignore", category=UserWarning, module="xgboost")
 app = Flask(__name__)
 
 # Memuat model XGBoost untuk Student dan Working Professional
-with open('../Application/xgb_model.pkl', 'rb') as file:
+with open('xgb_model.pkl', 'rb') as file:
     model = pickle.load(file)
 
 # Pastikan semua data yang diperlukan ada
