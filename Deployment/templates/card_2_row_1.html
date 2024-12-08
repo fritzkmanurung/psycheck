@@ -1,51 +1,80 @@
 <!-- Card 2 Row 1 -->
-<div class="card" style="height: 35vh;">
-    <div class="card-body elegant-color d-flex flex-column justify-content-center align-items-center" style="height: 100%;">
-        <h3 class="text-center" id="result-title">Hasil Prediksi Depresi</h3>
-        
-        <!-- Elemen hasil prediksi -->
-        <div id="result" class="result-box text-center text-white">
-            <!-- This will display the result when available -->
-        </div>
-        <!-- Animasi berjalan (muncul sebelum submit) -->
-        <div id="walking-animation" class="walking-animation">
-            <img src="../static/ezgif.com-crop.gif" alt="Walking Person" style="width: 100px; height: auto; animation: walkAnimation 5s infinite;">
-        </div>
+
+<div class="card-body elegant-color d-flex flex-column justify-content-center align-items-center text-center">
+    <h3 class="text-center mb-3" id="result-title">Hasil Prediksi Depresi</h3>
+
+    <!-- Elemen hasil prediksi -->
+    <div id="result" class="result-box text-white mb-3">
+        <!-- This will display the result when available -->
+    </div>
+
+    <!-- Animasi berjalan (muncul sebelum submit) -->
+    <div id="walking-animation" class="walking-animation">
+        <img src="../static/ezgif.com-crop.gif" alt="Walking Person" class="img-fluid">
     </div>
 </div>
 
+
 <!-- Additional CSS -->
 <style>
-    /* Importing Google Font */
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+/* Importing Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-    /* Apply the font to the entire page */
-    body {
-        font-family: 'Poppins', sans-serif;
+/* Global font */
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Responsiveness */
+.card-body {
+    padding: 20px;
+}
+
+.text-white {
+    color: #000000 !important;
+}
+
+/* Animasi berjalan */
+.walking-animation img {
+    width: 150px;
+    height: auto;
+    animation: walkAnimation 5s infinite;
+}
+
+@keyframes walkAnimation {
+    0% {
+        transform: translateX(-100px); /* Start from left */
     }
-
-    .card-body {
-        padding: 20px;
+    50% {
+        transform: translateX(100px); /* Move to right */
     }
-
-    .text-white {
-        color: #000000 !important;
+    100% {
+        transform: translateX(-100px); /* Return to left */
     }
+}
 
-    /* Animation for walking person */
+/* Media query untuk layar kecil */
+@media (max-width: 768px) {
     .walking-animation img {
-        animation: walkAnimation 5s infinite;
+        width: 100px; /* Lebih kecil pada layar kecil */
     }
 
-    @keyframes walkAnimation {
-        0% {
-            transform: translateX(-100px); /* Start from left */
-        }
-        50% {
-            transform: translateX(100px); /* Move to right */
-        }
-        100% {
-            transform: translateX(-100px); /* Return to left */
-        }
+    h3#result-title {
+        font-size: 1.5rem; /* Sesuaikan ukuran font */
     }
+
+    #result {
+        font-size: 1rem; /* Kurangi ukuran teks untuk layar kecil */
+    }
+}
+
+@media (max-width: 576px) {
+    .walking-animation img {
+        width: 80px; /* Lebih kecil untuk layar sangat kecil */
+    }
+
+    h3#result-title {
+        font-size: 1.2rem;
+    }
+}
 </style>

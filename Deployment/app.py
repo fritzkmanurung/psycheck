@@ -19,10 +19,6 @@ feature_names = [
     'Family History of Mental Illness', 'Job/Study Satisfaction', 'Work/Academic Pressure'
 ]
 
-@app.route('/contoh')
-def example():
-    return render_template('index.html')
-
 # Route untuk halaman utama
 @app.route('/')
 def home():
