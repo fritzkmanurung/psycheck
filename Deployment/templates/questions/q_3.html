@@ -1,48 +1,65 @@
 <div class="form-group">
-    <label for="workingOrStudent">Working or Student</label>
+    <label for="workingOrStudent">Apakah Anda seorang pekerja atau pelajar?</label>
     <select class="form-control" id="workingOrStudent" required>
-        <option value="">Select</option>
-        <option value="0">Working Professional</option>
-        <option value="1">Student</option>
+        <option value="">Pilih</option>
+        <option value="0">Pekerja Profesional</option>
+        <option value="1">Pelajar</option>
     </select>
-    <div class="invalid-feedback">Please select a valid option.</div>
+    <div class="invalid-feedback">Silakan pilih salah satu opsi yang tersedia.</div>
 </div>
 
-<!-- Container for the image -->
-<div id="image-container" style="text-align: center; margin-top: 20px;">
+<div id="image-container" class="text-center mt-4">
     <img id="display-image" src="https://img.pikbest.com/png-images/qiantu/hand-drawn-cartoon-boy-question-mark-free-illustration_2727530.png!sw800" 
-         alt="Default Image" 
-         style="max-width: 250px; height: auto; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);">
+         alt="Gambar Default" 
+         class="responsive-img">
 </div>
 
 <script>
-    // Get the select element and image element
     const workingOrStudent = document.getElementById("workingOrStudent");
     const displayImage = document.getElementById("display-image");
 
-    // Add event listener to the dropdown
     workingOrStudent.addEventListener("change", function () {
         const value = workingOrStudent.value;
 
-        // Change the image source based on the selected option
         if (value === "0") {
             displayImage.src = "https://cdn.pixabay.com/photo/2024/02/18/06/23/ai-generated-8580600_1280.jpg";
-            displayImage.alt = "Working Professional";
+            displayImage.alt = "Pekerja Profesional";
         } else if (value === "1") {
             displayImage.src = "https://cdn.pixabay.com/photo/2023/10/05/11/06/student-8295511_1280.png";
-            displayImage.alt = "Student";
+            displayImage.alt = "Pelajar";
         } else {
             displayImage.src = "https://img.pikbest.com/png-images/qiantu/hand-drawn-cartoon-boy-question-mark-free-illustration_2727530.png!sw800";
-            displayImage.alt = "Default Image";
+            displayImage.alt = "Gambar Default";
         }
     });
 </script>
 
-<!-- Additional CSS -->
 <style>
-    #image-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .responsive-img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .responsive-img:hover {
+        transform: scale(1.1);
+        box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    @media (max-width: 768px) {
+        .responsive-img {
+            width: 150px;
+            height: 150px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .responsive-img {
+            width: 120px;
+            height: 120px;
+        }
     }
 </style>
