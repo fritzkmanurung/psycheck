@@ -5,121 +5,292 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PsyCheck</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../static/img/favicon.png">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../static/index.css">
-    <style>
-        body {
-            background-color: #f9fafc;
-            font-family: 'Arial', sans-serif;
-        }
-        .container {
-            margin-top: 50px;
-        }
-        .card {
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 15px;
-            background: #ffffff;
-        }
-        h2, h3 {
-            font-weight: bold;
-            color: #4a4a4a;
-        }
-        h2 {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        h3 {
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        .form-group label {
-            font-weight: 500;
-            color: #5c5c5c;
-        }
-        input, select {
-            font-size: 16px;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            background-color: #f9f9f9;
-            width: 100%;
-        }
-        input.is-invalid {
-            border-color: #e57373;
-        }
-        .invalid-feedback {
-            display: none;
-            color: #e57373;
-            font-size: 0.875em;
-        }
-        input.is-invalid + .invalid-feedback {
-            display: block;
-        }
-        .btn {
-            background-color: #6c63ff;
-            color: white;
-            border-radius: 25px;
-            font-size: 18px;
-            padding: 10px 0;
-            width: 100%;
-            transition: background-color 0.3s ease;
-        }
-        .btn:hover {
-            background-color: #5751d1;
-        }
-        .alert {
-            margin-top: 15px;
-            background-color: #f5f5f5;
-            color: #4a4a4a;
-            border: none;
-        }
-        .header-icon {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .header-icon img {
-            width: 80px;
-            height: 80px;
-        }
-        .text-center {
-            text-align: center;
-            color: #6c63ff;
-        }
-        #progress-container progress {
-            width: 100%;
-            height: 20px;
-            border-radius: 10px;
-            background-color: #f0f0f0;
-            color: #6c63ff;
-        }
-        #progress-container progress::-webkit-progress-value {
-            background-color: #6c63ff;
-        }
-        #progress-container progress::-webkit-progress-bar {
-            border-radius: 10px;
-        }
-    </style>
 </head>
 <body>
-<div class="container py-5">
-    <div class="row gy-4">
+<div class="container d-flex align-items-center min-vh-100 py-3">
+    <div class="row gy-4 w-100">
+        <!-- Kolom Card 1 (Form Survei Utama) -->
         <div class="col-lg-6 col-md-12">
             <div class="card h-100">
-                {% include 'card_1.html' %}
+                <div class="card-body">
+                    <h3 class="title-text" id="titlecard">Formulir Prediksi Depresi</h3>
+                    <div id="progress-container">
+                        <progress id="form-progress" value="1" max="11"></progress>
+                        <p id="step-number">Langkah 1 dari 11</p>
+                    </div>
+
+                    <form id="depression-form">
+                        <!-- Langkah 1 -->
+                        <div class="form-step active" data-step="1">
+                            <div class="form-group">
+                                <label for="gender">Apa jenis kelamin Anda?</label>
+                                <select class="form-control" id="gender" required>
+                                    <option value="">Pilih jenis kelamin</option>
+                                    <option value="1">Laki-laki</option>
+                                    <option value="0">Perempuan</option>
+                                </select>
+                                <div class="invalid-feedback">Silakan pilih salah satu opsi yang tersedia.</div>
+                            </div>
+                            <div id="image-container-1" class="text-center mt-4">
+                                <img id="gender-image" src="/static/img/gender_default.png" alt="Gambar Jenis Kelamin" class="responsive-img">
+                            </div>
+                            <div class="form-actions" style="justify-content: flex-end;">
+                                <button type="button" class="btn btn-primary next-btn" disabled>Selanjutnya</button>
+                            </div>
+                        </div>
+
+                        <!-- Langkah 2 -->
+                        <div class="form-step" data-step="2">
+                            <div class="form-group">
+                                <label for="age">Berapa usia Anda? (tahun)</label>
+                                <input type="number" class="form-control" id="age" placeholder="Masukkan usia Anda" required>
+                                <div class="invalid-feedback">Usia tidak boleh 0.</div>
+                            </div>
+                            <div id="image-container-2" class="text-center mt-4">
+                                <img id="age-image" src="/static/img/gender_default.png" alt="Gambar Umur" class="responsive-img">
+                                <p id="confirmation-message" class="mt-3" style="display: none; font-weight: 600; color: #ff5722;">Apakah kamu serius?</p>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary prev-btn">Sebelumnya</button>
+                                <button type="button" class="btn btn-primary next-btn" disabled>Selanjutnya</button>
+                            </div>
+                        </div>
+
+                        <!-- Langkah 3 -->
+                        <div class="form-step" data-step="3">
+                            <div class="form-group">
+                                <label for="workingOrStudent">Apakah Anda seorang pekerja atau pelajar?</label>
+                                <select class="form-control" id="workingOrStudent" required>
+                                    <option value="">Pilih</option>
+                                    <option value="0">Pekerja Profesional</option>
+                                    <option value="1">Pelajar</option>
+                                </select>
+                                <div class="invalid-feedback">Silakan pilih salah satu opsi yang tersedia.</div>
+                            </div>
+                            <div id="image-container-3" class="text-center mt-4">
+                                <img id="display-image" src="/static/img/gender_default.png" alt="Gambar Default" class="responsive-img">
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary prev-btn">Sebelumnya</button>
+                                <button type="button" class="btn btn-primary next-btn" disabled>Selanjutnya</button>
+                            </div>
+                        </div>
+
+                        <!-- Langkah 4 -->
+                        <div class="form-step" data-step="4">
+                            <div class="form-group">
+                                <label for="sleepDuration">Berapa durasi tidur Anda?</label>
+                                <select class="form-control" id="sleepDuration" required>
+                                    <option value="">Pilih Durasi Tidur</option>
+                                    <option value="4">Kurang dari 5 jam</option>
+                                    <option value="5.5">5-6 jam</option>
+                                    <option value="7.5">7-8 jam</option>
+                                    <option value="9">Lebih dari 8 jam</option>
+                                </select>
+                            </div>
+                            <div id="image-container-4" class="text-center mt-4">
+                                <img id="sleep-image" src="/static/img/sleep.png" alt="Gambar Durasi Tidur" class="responsive-img">
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary prev-btn">Sebelumnya</button>
+                                <button type="button" class="btn btn-primary next-btn" disabled>Selanjutnya</button>
+                            </div>
+                        </div>
+
+                        <!-- Langkah 5 -->
+                        <div class="form-step" data-step="5">
+                            <div class="form-group">
+                                <label for="dietaryHabits">Bagaimana pola makan Anda?</label>
+                                <select class="form-control" id="dietaryHabits" required>
+                                    <option value="">Pilih Pola Makan</option>
+                                    <option value="2">Tidak Sehat</option>
+                                    <option value="1">Cukup Sehat</option>
+                                    <option value="0">Sehat</option>
+                                </select>
+                            </div>
+                            <div id="image-container-5" class="text-center mt-4">
+                                <img id="dietary-image" src="/static/img/diet.png" alt="Gambar Pola Makan" class="responsive-img">
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary prev-btn">Sebelumnya</button>
+                                <button type="button" class="btn btn-primary next-btn" disabled>Selanjutnya</button>
+                            </div>
+                        </div>
+
+                        <!-- Langkah 6 -->
+                        <div class="form-step" data-step="6">
+                            <div class="form-group">
+                                <label for="suicidalThoughts">Apakah Anda pernah memiliki pikiran untuk bunuh diri?</label>
+                                <select class="form-control" id="suicidalThoughts" required>
+                                    <option value="">Pilih Jawaban</option>
+                                    <option value="1">Ya</option>
+                                    <option value="0">Tidak</option>
+                                </select>
+                            </div>
+                            <div id="image-container-6" class="text-center mt-4">
+                                <img id="suicidal-image" src="/static/img/hope.png" alt="Gambar Harapan" class="responsive-img">
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary prev-btn">Sebelumnya</button>
+                                <button type="button" class="btn btn-primary next-btn" disabled>Selanjutnya</button>
+                            </div>
+                        </div>
+
+                        <!-- Langkah 7 -->
+                        <div class="form-step" data-step="7">
+                            <div class="form-group">
+                                <label for="workStudyHours">Berapa jam Anda bekerja atau belajar setiap hari?</label>
+                                <input type="number" class="form-control" id="workStudyHours" placeholder="Jam per hari" required>
+                                <div class="invalid-feedback">Jam kerja atau belajar tidak boleh 0.</div>
+                            </div>
+                            <div id="image-container-7" class="text-center mt-4">
+                                <img id="work-study-image" src="/static/img/hours.png" alt="Gambar Jam Kerja" class="responsive-img">
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary prev-btn">Sebelumnya</button>
+                                <button type="button" class="btn btn-primary next-btn" disabled>Selanjutnya</button>
+                            </div>
+                        </div>
+
+                        <!-- Langkah 8 -->
+                        <div class="form-step" data-step="8">
+                            <div class="form-group">
+                                <label for="financialStress">Seberapa besar tingkat stres keuangan Anda? (1 = Rendah, 5 = Tinggi)</label>
+                                <select class="form-control" id="financialStress" required>
+                                    <option value="">Pilih Tingkat Stres</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                                <div class="invalid-feedback">Silakan pilih opsi yang valid.</div>
+                            </div>
+                            <div id="image-container-8" class="text-center mt-4">
+                                <img id="financial-stress-image" src="/static/img/finance.png" alt="Gambar Stres Keuangan" class="responsive-img">
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary prev-btn">Sebelumnya</button>
+                                <button type="button" class="btn btn-primary next-btn" disabled>Selanjutnya</button>
+                            </div>
+                        </div>
+
+                        <!-- Langkah 9 -->
+                        <div class="form-step" data-step="9">
+                            <div class="form-group">
+                                <label for="familyHistory">Apakah ada riwayat penyakit mental dalam keluarga Anda?</label>
+                                <select class="form-control" id="familyHistory" required>
+                                    <option value="">Pilih Jawaban</option>
+                                    <option value="1">Ya</option>
+                                    <option value="0">Tidak</option>
+                                </select>
+                            </div>
+                            <div id="image-container-9" class="text-center mt-4">
+                                <img id="family-history-image" src="/static/img/family.png" alt="Gambar Riwayat Keluarga" class="responsive-img">
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary prev-btn">Sebelumnya</button>
+                                <button type="button" class="btn btn-primary next-btn" disabled>Selanjutnya</button>
+                            </div>
+                        </div>
+
+                        <!-- Langkah 10 -->
+                        <div class="form-step" data-step="10">
+                            <div class="form-group">
+                                <label for="jobStudySatisfaction">Seberapa puas Anda terhadap pekerjaan atau studi Anda? (1 = Rendah, 5 = Tinggi)</label>
+                                <select class="form-control" id="jobStudySatisfaction" required>
+                                    <option value="">Pilih Tingkat Kepuasan</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                                <div class="invalid-feedback">Silakan pilih opsi yang valid.</div>
+                            </div>
+                            <div id="image-container-10" class="text-center mt-4">
+                                <img id="job-study-satisfaction-image" src="/static/img/satisfaction.png" alt="Gambar Tingkat Kepuasan" class="responsive-img">
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary prev-btn">Sebelumnya</button>
+                                <button type="button" class="btn btn-primary next-btn" disabled>Selanjutnya</button>
+                            </div>
+                        </div>
+
+                        <!-- Langkah 11 -->
+                        <div class="form-step" data-step="11">
+                            <div class="form-group">
+                                <label for="workAcademicPressure">Seberapa besar tekanan kerja/akademik yang Anda rasakan? (1 = Rendah, 5 = Tinggi)</label>
+                                <select class="form-control" id="workAcademicPressure" required>
+                                    <option value="">Pilih Tingkat Tekanan</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                                <div class="invalid-feedback">Silakan pilih opsi yang valid.</div>
+                            </div>
+                            <div id="image-container-11" class="text-center mt-4">
+                                <img id="work-academic-pressure-image" src="/static/img/pressure.png" alt="Gambar Tekanan Kerja" class="responsive-img">
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary prev-btn">Sebelumnya</button>
+                                <button type="submit" class="btn btn-success" id="submit-btn">Kirim</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-        <div class="col-lg-6 col-md-12">
-            <div class="row gy-4">
-                <div class="col-12">
-                    <div class="card h-100">
-                        {% include 'card_2_row_1.html' %}
+
+        <!-- Kolom Kanan (Hasil & Pembuat) -->
+        <div class="col-lg-6 col-md-12 d-flex flex-column">
+            <!-- Card 2 Row 1 (Hasil) -->
+            <div class="card flex-grow-1 mb-4">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                    <h3 class="mb-3" id="result-title">Hasil Prediksi Depresi</h3>
+
+                    <div id="result" class="result-box mb-3 text-center" style="display: none;"></div>
+
+                    <div class="walking-animation" id="walking-animation">
+                        <img src="../static/ezgif.com-crop.gif" alt="Walking Person" class="img-fluid">
                     </div>
                 </div>
-                <div class="col-12">
-                    <div class="card h-100">
-                        {% include 'card_2_row_2.html' %}
+            </div>
+
+            <!-- Card 2 Row 2 (Pembuat) -->
+            <div class="card">
+                <div class="card-body text-center">
+                    <img src="../static/logo-dami.png" alt="Website Logo" class="logo mx-auto d-block mb-3">
+                    <h5 class="mb-4" style="font-weight: 600; color: var(--sage-dark);">Dibuat Oleh :</h5>
+                    <div class="team-container">
+                        <div class="text-center team-member">
+                            <img src="../static/walker.png" alt="Pembuat 1" class="circle-img">
+                            <p class="name">Walker V Simanjuntak <br> <span class="nim">12S21012</span>
+                                <br><a href="https://www.linkedin.com" target="_blank" class="linkedin-icon"><i class="fas fa-external-link-alt"></i></a>
+                            </p>
+                        </div>
+                        <div class="text-center team-member">
+                            <img src="../static/markus.png" alt="Pembuat 2" class="circle-img">
+                            <p class="name">Markus P Hutagalung <br> <span class="nim">12S21013</span>
+                                <br><a href="https://www.linkedin.com" target="_blank" class="linkedin-icon"><i class="fas fa-external-link-alt"></i></a>
+                            </p>
+                        </div>
+                        <div class="text-center team-member">
+                            <img src="../static/fritz.png" alt="Pembuat 3" class="circle-img">
+                            <p class="name">Fritz K Manurung <br> <span class="nim">12S21014</span>
+                                <br><a href="https://www.linkedin.com" target="_blank" class="linkedin-icon"><i class="fas fa-external-link-alt"></i></a>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -133,22 +304,67 @@
 <script src="../static/card_1.js"></script>
 <script src="../static/depresi.js"></script>
 <script>
-    document.getElementById('depression-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const walkingAnimation = document.getElementById('walking-animation');
-        if (walkingAnimation) walkingAnimation.style.display = 'none';
-        const resultDiv = document.getElementById('result');
-        if (resultDiv) {
-            resultDiv.innerHTML = 'Prediksi: Depresi Berat';
-            resultDiv.style.display = 'block';
-        }
-    });
+    // Inline scripts for image interaction specific to Q1, Q2, Q3
+    const genderSelect = document.getElementById("gender");
+    const genderImage = document.getElementById("gender-image");
+    if(genderSelect && genderImage) {
+        genderSelect.addEventListener("change", function() {
+            const gender = genderSelect.value;
+            if (gender === "1") {
+                genderImage.src = "/static/img/gender_male.png";
+            } else if (gender === "0") {
+                genderImage.src = "/static/img/gender_female.png";
+            } else {
+                genderImage.src = "/static/img/gender_default.png";
+            }
+        });
+    }
 
+    const ageInput = document.getElementById("age");
+    const ageImage = document.getElementById("age-image");
+    const confirmationMessage = document.getElementById("confirmation-message");
+    if(ageInput && ageImage) {
+        ageInput.addEventListener("input", function() {
+            const age = parseInt(ageInput.value);
+            if (age > 0) {
+                ageImage.src = "/static/img/age_humor.png";
+                if(confirmationMessage) confirmationMessage.style.display = "block";
+            } else {
+                ageImage.src = "/static/img/gender_default.png";
+                if(confirmationMessage) confirmationMessage.style.display = "none";
+            }
+        });
+    }
+
+    const workingOrStudent = document.getElementById("workingOrStudent");
+    const displayImage = document.getElementById("display-image");
+    if(workingOrStudent && displayImage) {
+        workingOrStudent.addEventListener("change", function () {
+            const value = workingOrStudent.value;
+            if (value === "0") {
+                displayImage.src = "/static/img/prof_worker.png";
+                displayImage.alt = "Pekerja Profesional";
+            } else if (value === "1") {
+                displayImage.src = "/static/img/prof_student.png";
+                displayImage.alt = "Pelajar";
+            } else {
+                displayImage.src = "/static/img/gender_default.png";
+                displayImage.alt = "Gambar Default";
+            }
+        });
+    }
+
+    // Inisialisasi tampilan awal
     window.onload = function () {
         const walkingAnimation = document.getElementById('walking-animation');
         if (walkingAnimation) walkingAnimation.style.display = 'block';
         const resultDiv = document.getElementById('result');
         if (resultDiv) resultDiv.style.display = 'none';
+
+        // Sinkronisasi gambar dengan nilai form yang mungkin ter-cache oleh browser
+        if (genderSelect) genderSelect.dispatchEvent(new Event('change'));
+        if (ageInput && ageInput.value) ageInput.dispatchEvent(new Event('input'));
+        if (workingOrStudent) workingOrStudent.dispatchEvent(new Event('change'));
     };
 </script>
 </body>

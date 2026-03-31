@@ -42,10 +42,23 @@ def predict():
         
         # Prediksi menggunakan model
         prediction = model.predict(input_data)[0]
-        print(f"Prediction: {prediction}")
+        
+        # Coba ambil probabilitas jika didukung oleh model
+        probability = 0.0
+        try:
+            probabilities = model.predict_proba(input_data)[0]
+            probability = float(probabilities[1]) # Probabilitas kelas 1 (Depresi)
+        except Exception as e:
+            print(f"Probabilitas tidak didukung: {e}")
+            probability = float(prediction)
+
+        print(f"Prediction: {prediction}, Probability: {probability}")
         
         # Kembalikan hasil prediksi dalam format JSON
-        return jsonify({'prediction': int(prediction)})
+        return jsonify({
+            'prediction': int(prediction),
+            'probability': probability
+        })
     
     except Exception as e:
         # Tangani error dan kembalikan pesan error sebagai JSON response

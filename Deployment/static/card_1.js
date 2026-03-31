@@ -5,28 +5,50 @@ $(document).ready(function () {
     function showStep(step) {
         $(".form-step").removeClass("active");
         $(`.form-step[data-step="${step}"]`).addClass("active");
+        validateCurrentStep(); // Selalu validasi saat pindah langkah
+        updateProgressBar();
     }
 
-    function validateInput(step) {
-        const $currentStep = $(`.form-step[data-step="${step}"]`);
+    function validateCurrentStep() {
+        const $step = $(`.form-step[data-step="${currentStep}"]`);
         let isValid = true;
 
-        $currentStep.find("input, select").each(function () {
-            if ($(this).is(":invalid") || !$(this).val()) {
+        $step.find("input, select").each(function () {
+            const val = $(this).val();
+            // Cek apakah field kosong atau invalid
+            if (!val || val === "" || $(this).is(":invalid")) {
+                isValid = false;
+            }
+            // Khusus input number: pastikan nilainya > 0
+            if ($(this).attr("type") === "number" && (isNaN(val) || Number(val) <= 0)) {
                 isValid = false;
             }
         });
 
-        $currentStep.find(".next-btn").prop("disabled", !isValid);
+        // Aktifkan/nonaktifkan tombol Selanjutnya
+        $step.find(".next-btn").prop("disabled", !isValid);
+
+        // Aktifkan/nonaktifkan tombol Submit (langkah terakhir)
+        $step.find("#submit-btn").prop("disabled", !isValid);
     }
 
+    function updateProgressBar() {
+        const $progress = document.getElementById('form-progress');
+        const $stepNum = document.getElementById('step-number');
+        if ($progress) $progress.value = currentStep;
+        if ($stepNum) $stepNum.innerText = `Langkah ${currentStep} dari ${totalSteps}`;
+    }
+
+    // Tombol Selanjutnya: hanya bisa diklik jika tidak disabled
     $(".next-btn").click(function () {
+        if ($(this).prop("disabled")) return; // Jaga-jaga
         if (currentStep < totalSteps) {
             currentStep++;
             showStep(currentStep);
         }
     });
 
+    // Tombol Sebelumnya
     $(".prev-btn").click(function () {
         if (currentStep > 1) {
             currentStep--;
@@ -34,38 +56,11 @@ $(document).ready(function () {
         }
     });
 
+    // Validasi real-time saat user mengisi/memilih
     $("input, select").on("input change", function () {
-        validateInput(currentStep);
+        validateCurrentStep();
     });
 
-    showStep(currentStep); // Initial display
-});
-
-document.getElementById('depression-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    document.querySelector('.form-step').style.display = 'none';
-    document.getElementById('thank-you-message').style.display = 'block';
-});
-
-let currentStep = 1;
-let totalSteps = 11;
-
-function updateProgressBar() {
-    document.getElementById('form-progress').value = currentStep;
-    document.getElementById('step-number').innerText = `Step ${currentStep} of ${totalSteps}`;
-}
-
-// Event listener untuk tombol next dan previous
-document.querySelectorAll('.next-btn').forEach(button => {
-    button.addEventListener('click', function() {
-        currentStep++;
-        updateProgressBar();
-    });
-});
-
-document.querySelectorAll('.prev-btn').forEach(button => {
-    button.addEventListener('click', function() {
-        currentStep--;
-        updateProgressBar();
-    });
+    // Inisialisasi: tampilkan langkah 1 dan validasi
+    showStep(currentStep);
 });
