@@ -41,28 +41,36 @@ document.getElementById('depression-form').addEventListener('submit', async func
 
         const result = await response.json();
 
-        // Tentukan hasil prediksi berdasarkan probabilitas
-        let probValue = result.probability !== undefined ? result.probability : result.prediction;
-        let score = Math.round(probValue * 100);
+        // ——— LOGIKA PERSENTASE ———
+        // Backend mengembalikan probability = peluang DEPRESI (kelas 1).
+        // Kita BALIK menjadi "Skor Kesehatan Mental":
+        //   → Semakin BESAR skor = semakin SEHAT
+        //   → Semakin KECIL skor = semakin berisiko depresi
+        let probDepresi = result.probability !== undefined ? result.probability : result.prediction;
+        let healthScore = Math.round((1 - probDepresi) * 100); // Dibalik!
+
         let predictionText = "";
         let alertClass = "";
         let emoji = "";
         let tips = [];
 
-        if (probValue >= 0.70) {
-            emoji = "🔴";
-            alertClass = "alert-danger";
-            predictionText = `Indikasi Depresi Kuat (${score}%)`;
+        // Threshold berdasarkan healthScore (semakin besar = semakin sehat)
+        if (healthScore >= 60) {
+            // Sehat: healthScore 60-100% (probDepresi 0-40%)
+            emoji = "🟢";
+            alertClass = "alert-success";
+            predictionText = `Kondisi Mental Stabil`;
             tips = [
-                "Sangat disarankan untuk segera berkonsultasi dengan profesional kesehatan mental.",
-                "Kurangi beban kerja atau akademik secara bertahap.",
-                "Bicarakan perasaan Anda dengan orang yang Anda percaya.",
-                "Hubungi layanan bantuan kesehatan mental: <strong>119 ext. 8</strong>"
+                "Teruslah pertahankan gaya hidup sehat Anda!",
+                "Tetap jaga keseimbangan antara kerja dan istirahat.",
+                "Luangkan waktu untuk bersosialisasi dengan orang terdekat.",
+                "Rutinkan olahraga dan konsumsi makanan bergizi."
             ];
-        } else if (probValue >= 0.40) {
+        } else if (healthScore >= 30) {
+            // Sedang: healthScore 30-59% (probDepresi 41-70%)
             emoji = "🟡";
             alertClass = "alert-warning";
-            predictionText = `Indikasi Stres Sedang (${score}%)`;
+            predictionText = `Indikasi Stres Sedang`;
             tips = [
                 "Jaga pola tidur yang teratur (7-8 jam per malam).",
                 "Luangkan waktu untuk aktivitas yang Anda nikmati.",
@@ -70,14 +78,15 @@ document.getElementById('depression-form').addEventListener('submit', async func
                 "Olahraga ringan 30 menit sehari dapat membantu mengurangi stres."
             ];
         } else {
-            emoji = "🟢";
-            alertClass = "alert-success";
-            predictionText = `Kondisi Mental Stabil (${score}%)`;
+            // Berisiko: healthScore 0-29% (probDepresi 71-100%)
+            emoji = "🔴";
+            alertClass = "alert-danger";
+            predictionText = `Indikasi Depresi Kuat`;
             tips = [
-                "Teruslah pertahankan gaya hidup sehat Anda!",
-                "Tetap jaga keseimbangan antara kerja dan istirahat.",
-                "Luangkan waktu untuk bersosialisasi dengan orang terdekat.",
-                "Rutinkan olahraga dan konsumsi makanan bergizi."
+                "Sangat disarankan untuk segera berkonsultasi dengan profesional kesehatan mental.",
+                "Kurangi beban kerja atau akademik secara bertahap.",
+                "Bicarakan perasaan Anda dengan orang yang Anda percaya.",
+                "Hubungi layanan bantuan kesehatan mental: <strong>119 ext. 8</strong>"
             ];
         }
 
@@ -87,9 +96,16 @@ document.getElementById('depression-form').addEventListener('submit', async func
         resultDiv.innerHTML = `
             <div class="alert ${alertClass}" style="text-align: left;">
                 <h5 style="text-align: center; margin-bottom: 12px;">${emoji} <strong>${predictionText}</strong></h5>
+                <div style="text-align: center; margin-bottom: 12px;">
+                    <span style="font-size: 2rem; font-weight: 700; color: inherit;">${healthScore}%</span>
+                    <p style="font-size: 0.78rem; color: inherit; opacity: 0.8; margin: 4px 0 0;">
+                        Skor Kesehatan Mental<br>
+                        <em>(Semakin tinggi = semakin sehat)</em>
+                    </p>
+                </div>
                 <hr>
-                <p style="font-weight: 600; margin-bottom: 8px;">💡 Saran untuk Anda:</p>
-                <ul style="padding-left: 20px; margin-bottom: 0;">${tipsHtml}</ul>
+                <p style="font-weight: 600; margin-bottom: 8px; font-size: 0.85rem;">💡 Saran untuk Anda:</p>
+                <ul style="padding-left: 20px; margin-bottom: 0; font-size: 0.8rem; line-height: 1.7;">${tipsHtml}</ul>
             </div>
         `;
 
@@ -107,7 +123,11 @@ document.getElementById('depression-form').addEventListener('submit', async func
             if (progressEl) progressEl.remove();
             if (titleEl) titleEl.remove();
 
-            // Tampilkan halaman "terima kasih" yang lebih hidup
+            // Cegah duplikasi: hapus thank-you section yang sudah ada (jika ada)
+            const existingThankYou = document.getElementById('thank-you-section');
+            if (existingThankYou) existingThankYou.remove();
+
+            // Tampilkan halaman "terima kasih"
             const cardBody = form.closest('.card-body');
             const thankYou = document.createElement('div');
             thankYou.id = 'thank-you-section';
