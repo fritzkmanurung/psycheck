@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="Document/img/hero-banner.png" alt="Mental Health Data Mining Hero Banner" width="100%">
+  <img src="Document/img/hero-banner.png" alt="Mental Health Data Mining Hero Banner" width="60%">
   
   <br>
   
@@ -60,8 +60,6 @@ Berdasarkan prediksi XGBoost (disimpan pada `Data/xgb_pred.csv`), model sukses m
 Model _machine learning_ terbaik kami (`xgb_model.pkl`) diintegrasikan langsung sebagai **Website Interaktif** menggunakan *framework* web **Flask**. Website ini meminta masukan data anonim dari pengguna di *Real Time* dan seketika mengeksekusi analisis probabilitas.
 
 ### 💻 Tampilan Aplikasi
-> **Bantu Kami Melengkapi:** Anda bisa melihat gambar tangkapan layar (screenshot) aplikasi kami di bawah ini!
-> _(Tempatkan file screenshot Anda bernama `app-screenshot.png` di folder `Document/img/` agar tampil secara otomatis di sini)_
 
 <div align="center">
   <img src="Document/img/app-screenshot.png" alt="Aplikasi Prediksi Depresi" width="80%">
